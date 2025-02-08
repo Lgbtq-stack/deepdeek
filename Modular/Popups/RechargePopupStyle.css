@@ -1,0 +1,85 @@
+.instructions-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.recharge-steps {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+.recharge-steps li {
+    margin-bottom: 15px;
+}
+
+
+.copy-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: var(--grey-background-color);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.copy-section strong {
+    color: var(--text-color);
+}
+
+.copy-section p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--white);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.copy-button {
+    background-color: var(--confirm-color);
+    color: var(--white);
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.copy-button:hover {
+    background-color: var(--confirm-color);
+}
+
+.important-text {
+    font-size: 14px;
+    color: var(--red-button-color);
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.ok-button {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 20px auto 0;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
