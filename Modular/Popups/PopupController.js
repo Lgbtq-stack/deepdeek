@@ -30,8 +30,8 @@ export function openWithdrawPopup_(title = "Withdraw Funds", placeholder = "Ente
 export function openWalletPopup_(title = "Add Wallet", placeholder = "Enter wallet address", buttonText = "Add Wallet") {
     document.getElementById('wallet-title').innerText = title;
     document.getElementById('wallet-input').placeholder = placeholder;
-    document.getElementById('wallet-confirm-button').innerText = buttonText;
     document.getElementById('wallet-popup').style.display = 'flex';
+    document.getElementById('wallet-confirm-button').innerText = buttonText;
     disableScroll();
 }
 
@@ -73,7 +73,7 @@ export function copyToClipboard_(elementId) {
     }
 
     navigator.clipboard.writeText(text)
-        .then(() => showToast("Copied to clipboard"))
+        .then(() => showToast("✅ Copied to clipboard"))
         .catch((err) => {
             console.error("Failed to copy text: ", err);
             showToast("Failed to copy text.");

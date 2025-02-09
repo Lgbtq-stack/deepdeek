@@ -1,9 +1,12 @@
 import {
     closeErrorPopup_,
-    closePopup_, copyToClipboard_,
+    closePopup_,
+    copyToClipboard_,
     disableScroll_,
-    enableScroll_, openRechargePopup_,
-    openWalletPopup_, openWebPage_,
+    enableScroll_,
+    openRechargePopup_,
+    openWalletPopup_,
+    openWebPage_,
     openWithdrawPopup_,
     showErrorPopup_
 } from "./PopupController.js";
@@ -34,6 +37,10 @@ window.closeErrorPopup = function() {
 
 window.closePopup = function() {
     closePopup_();
+}
+
+window.showToast = function() {
+    showToast_();
 }
 
 window.copyToClipboard = function(elementId) {

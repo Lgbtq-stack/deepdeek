@@ -1,21 +1,25 @@
+import {loadWalletData} from "./WalletController.js";
+
 export let user_Id = "";
 let localUserID = "488916773";
 
 let isInitialized = false;
-let debbug = true;
+let debug = true;
 
 export function Initialize()
 {
     isInitialized = true;
 
     user_Id = getUserIdFromURL();
+
+    loadWalletData();
 }
 
 function getUserIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     user_Id = urlParams.get("user_id");
 
-    if(debbug) {
+    if(debug) {
         user_Id = localUserID;
     }
 

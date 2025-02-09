@@ -72,15 +72,17 @@
     bottom: -100px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
+    background-color: var(--grey-background-color);
+    color: var(--white);
+    padding: 10px 30px 10px 20px;
     border-radius: 10px;
     font-size: 16px;
     font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px var(--box-shadow);
+    width: 150px;
     z-index: 9999;
     opacity: 0;
+    text-wrap: nowrap;
 }
 
 .toast.animate {
