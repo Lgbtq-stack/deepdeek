@@ -1,6 +1,6 @@
-export const errorPopup_ = document.getElementById("error-popup");
-export const errorTitle_ = document.getElementById("error-title");
-export const errorMessage_ = document.getElementById("error-message");
+export const errorPopup_ = document.getElementById("epus-error-popup");
+export const errorTitle_ = document.getElementById("epus-error-title");
+export const errorMessage_ = document.getElementById("epus-error-message");
 export const addWalletPopup_ = document.getElementById("wallet-popup");
 export const withdrawPopup_ = document.getElementById("withdraw-popup");
 export const rechargePopup_ = document.getElementById("recharge-popup");
@@ -49,7 +49,7 @@ export function openWebPage_() {
     }
 }
 
-function showToast(message) {
+export function showToast_(message) {
     const toast = document.getElementById('toast-notification');
     toast.textContent = message;
 
@@ -81,6 +81,8 @@ export function copyToClipboard_(elementId) {
 }
 
 export function closeErrorPopup_() {
+    console.log("closeErrorPopup_");
+
     errorPopup_.style.display = "none";
     enableScroll();
 }

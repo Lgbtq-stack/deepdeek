@@ -9,6 +9,7 @@
     <!--Styles -->
     <link rel="stylesheet" href="styles/HomeSectionStyle.css">
     <link rel="stylesheet" href="styles/WalletSectionStyle.css">
+    <link rel="stylesheet" href="styles/HistoryStyle.css">
     <link rel="stylesheet" href="Modular/Popups/ErrorPopUpStyle.css">
     <link rel="stylesheet" href="Modular/Popups/CommonPopup.css">
     <link rel="stylesheet" href="Modular/Popups/RechargePopupStyle.css">
@@ -106,7 +107,9 @@
     <div id="transaction-content" class="transaction-section hidden"> </div>
 
     <!-- History Section -->
-    <div id="history-content" class="history-section hidden"> </div>
+    <div id="history-content" class="history-section hidden">
+        <div class="history-list"></div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -189,7 +192,7 @@
     </div>
 
     <!-- Error Popup -->
-    <div id="epus-error-popup" class="epus-error-popup-overlay">
+    <div id="epus-error-popup" class="epus-error-popup-overlay" onclick="closeErrorPopup()">
         <div class="epus-error-popup-content">
             <h2 id="epus-error-title" class="epus-error-title">Warning</h2>
             <p id="epus-error-message" class="epus-error-message">Something went wrong. Please try again.</p>
@@ -201,7 +204,6 @@
 <div id="toast-notification" class="toast"></div>
 
 <script type="module" src="js/main.js"></script>
-<script type="module" src="js/WalletSection.js"></script>
 <script type="module" src="js/WalletAdapter.js"></script>
 <script type="module" src="Modular/Popups/PopupAdapter.js"></script>
 </body>

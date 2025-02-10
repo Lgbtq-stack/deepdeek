@@ -8,7 +8,8 @@ import {
     openWalletPopup_,
     openWebPage_,
     openWithdrawPopup_,
-    showErrorPopup_
+    showErrorPopup_,
+    showToast_
 } from "./PopupController.js";
 
 window.openWithdrawPopup = function(title = "Withdraw Funds", placeholder = "Enter amount", buttonText = "Confirm") {
@@ -39,8 +40,8 @@ window.closePopup = function() {
     closePopup_();
 }
 
-window.showToast = function() {
-    showToast_();
+window.showToast = function(message) {
+    showToast_(message);
 }
 
 window.copyToClipboard = function(elementId) {

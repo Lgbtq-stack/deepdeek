@@ -1,8 +1,6 @@
-import {checkTrustline} from "./CheckTrustline";
 import {showErrorPopup_} from "../Modular/Popups/PopupController.js";
 import {tg} from "./main.js";
-import {user_Id} from "./GetUserID.js";
-import {userData} from "./WalletSection.js";
+import {debug, localWalletData as userData, user_Id} from "./GetUserID.js";
 
 let isProcessing = false;
 const walletAddressInput = document.getElementById("wallet-input");
@@ -54,7 +52,6 @@ function addWalletsFromConfig(walletData) {
                 <span class="active-indicator"></span>
                 <div class="wallet-info">
                     <span class="wallet-address">${wallet.wallet}</span>
-                    <span class="wallet-balance">Balance: ${wallet.balance} USD</span>
                 </div>
             </div>
             <button class="delete-wallet-btn" onclick="deleteWallet(this, '${wallet.wallet}')">
@@ -81,38 +78,38 @@ export async function walletValidator(wallet) {
     if (!wallet) {
         showErrorPopup("error", "Wallet address cannot be empty.");
         isProcessing = false;
-        return;
+        return false;
     }
 
     if (!wallet.startsWith("G")) {
         showErrorPopup("error", "Wallet address must start with the letter 'G'.");
         isProcessing = false;
-        return;
+        return false;
     }
 
     if (wallet.length !== 56) {
         showErrorPopup("error", "Wallet address must be exactly 56 characters long.");
         isProcessing = false;
-        return;
+        return false;
     }
 
     if (!wallet.match(/^[A-Z0-9]+$/)) {
         showErrorPopup("error", "Wallet address must contain only uppercase letters and digits.");
         isProcessing = false;
-        return;
+        return false;
     }
 
-    // if (isNaN(amount) || amount <= 0) {
-    //     showErrorPopup_("error", "Please enter a valid amount.");
-    //     isProcessing = false;
-    //     return;
-    // }
-
-    // if (amount > userDataCache.data.balance) {
-    //     showErrorPopup("error", "Entered amount exceeds your balance.");
-    //     isProcessing = false;
-    //     return;
-    // }
+    // // if (isNaN(amount) || amount <= 0) {
+    // //     showErrorPopup_("error", "Please enter a valid amount.");
+    // //     isProcessing = false;
+    // //     return;
+    // // }
+    //
+    // // if (amount > userDataCache.data.balance) {
+    // //     showErrorPopup("error", "Entered amount exceeds your balance.");
+    // //     isProcessing = false;
+    // //     return;
+    // // }
 
     try {
         const response = await fetch(`https://horizon.stellar.org/accounts/${walletAddress}`);
@@ -131,13 +128,13 @@ export async function walletValidator(wallet) {
             return;
         }
 
-        // const hasTrustline = await checkTrustline(walletAddress);
-        // if (!hasTrustline) {
-        //     showErrorPopup("error", "No trustline assigned to the NFT asset.");
-        //
-        //     isProcessing = false;
-        //     return;
-        // }
+        const hasTrustline = await checkTrustline(walletAddress);
+        if (!hasTrustline) {
+            showErrorPopup("error", "No trustline assigned to the NFT asset.");
+
+            isProcessing = false;
+            return;
+        }
 
     } catch (error) {
         console.error("Error fetching wallet data:", error);
@@ -158,7 +155,7 @@ export async function walletValidator(wallet) {
 export function addWallet_() {
     const walletAddress = document.getElementById('wallet-input').value.trim();
 
-    if (!walletValidator(walletAddress)) {
+    if (walletValidator(walletAddress)) {
         showErrorPopup_("warning", "Please enter a valid wallet address.");
         return;
     }

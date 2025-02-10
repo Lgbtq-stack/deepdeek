@@ -1,18 +1,42 @@
-import {loadWalletData} from "./WalletController.js";
-
 export let user_Id = "";
 let localUserID = "488916773";
+export const localUserData = {
+    "user_data": [
+        {
+            "tokens": 0,
+            "balance": 0
+        }
+    ]
+}
+export let activeWallet = "";
+
+export const localWalletData = {
+    "wallet_data": [
+        {
+            "wallet": "GAKVPYAOBX7JWG7E74YXHSKNIYXSIKJ5J3PHCDTMAIKKMYLVB5WIY4KO",
+            "balance": -10,
+            "active": true,
+        },
+        {
+            "wallet": "GBQCR3L7H2QBCJNEI3CLBRCGQFSTGPEPRW3U2NPQRUJ66ZVQ7SECSUHQ",
+            "balance": -10,
+            "active": false,
+        },
+    ]
+}
+
+export const localHistoryData = {
+    "history_data": []
+}
 
 let isInitialized = false;
-let debug = true;
+export let debug = true;
 
 export function Initialize()
 {
     isInitialized = true;
 
     user_Id = getUserIdFromURL();
-
-    loadWalletData();
 }
 
 function getUserIdFromURL() {
