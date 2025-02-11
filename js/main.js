@@ -49,17 +49,12 @@ window.setActiveTab = function(selectedTab) {
         document.getElementById('wallet-content').classList.remove('hidden');
 
         loadWalletData();
-    } else if (currentTab === 'transaction') {
-        document.getElementById('transaction-content').classList.remove('hidden');
-    } else if (currentTab === 'history') {
-        document.getElementById('history-content').classList.remove('hidden');
-
-        renderHistory();
     }
+        // else if (currentTab === 'transaction') {
+    //     document.getElementById('transaction-content').classList.remove('hidden');
+    // } else if (currentTab === 'history') {
+    //     document.getElementById('history-content').classList.remove('hidden');
+    //
+    //     renderHistory();
+    // }
 }
-
-window.ifUserHasWallet = function(user_id) {
-    setActiveTab("wallet");
-    addWallet();
-}
-

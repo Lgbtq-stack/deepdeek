@@ -5,6 +5,8 @@ import {
     disableScroll_,
     enableScroll_,
     openRechargePopup_,
+    openTestPage1_,
+    openTestPage2_,
     openWalletPopup_,
     openWebPage_,
     openWithdrawPopup_,
@@ -26,6 +28,14 @@ window.openRechargePopup = function() {
 
 window.openWebPage = function() {
     openWebPage_();
+}
+
+window.openTestPage1 = function() {
+    openTestPage1_();
+}
+
+window.openTestPage2 = function() {
+    openTestPage2_();
 }
 
 window.showErrorPopup = function(type, message) {

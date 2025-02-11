@@ -4,8 +4,8 @@ import {
     selectWallet_
 } from "./WalletController.js";
 
-window.addWallet = function() {
-    addWallet_();
+window.addWallet = function(walletAddress) {
+    addWallet_(walletAddress);
 }
 
 window.selectWallet = function(walletItem) {
