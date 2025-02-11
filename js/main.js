@@ -22,7 +22,7 @@ function initializeData() {
 
 let currentTab = '';
 
-window.setActiveTab = function(selectedTab) {
+window.setActiveTab = async function (selectedTab) {
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => item.classList.remove('active'));
 
@@ -48,9 +48,9 @@ window.setActiveTab = function(selectedTab) {
     } else if (currentTab === 'wallet') {
         document.getElementById('wallet-content').classList.remove('hidden');
 
-        loadWalletData();
+        await loadWalletData();
     }
-        // else if (currentTab === 'transaction') {
+    // else if (currentTab === 'transaction') {
     //     document.getElementById('transaction-content').classList.remove('hidden');
     // } else if (currentTab === 'history') {
     //     document.getElementById('history-content').classList.remove('hidden');

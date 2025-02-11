@@ -7,24 +7,10 @@ let localUserID = "488916773";
 
 export let activeWallet = "";
 
-export const localUserData = {
-    "user_id": 488916773,
-    "nickname": "qwertyu",
+export let userData = {}
 
-    "wallets": [
-        // {
-        //     "id": 1,
-        //     "address": "GAKVPYAOBX7JWG7E74YXHSKNIYXSIKJ5J3PHCDTMAIKKMYLVB5WIY4KO",
-        //     "balance": -10,
-        //     "is_active": true,
-        // },
-        // {
-        //     "id": 2,
-        //     "address": "GBQCR3L7H2QBCJNEI3CLBRCGQFSTGPEPRW3U2NPQRUJ66ZVQ7SECSUHQ",
-        //     "balance": -10,
-        //     "is_active": false,
-        // },
-    ]
+export function SetUserData(data) {
+    userData = data;
 }
 
 export const localHistoryData = {
@@ -43,7 +29,7 @@ export async function Initialize() {
     await checkUserAndWallets();
 
     if (!activeWallet) {
-        const walletItems = localUserData.wallets;
+        const walletItems = userData.wallets;
         if (walletItems.length > 0) {
             activeWallet = walletItems.find(wallet => wallet.is_active)?.address || walletItems[0].address;
             console.log("Set active wallet to:", activeWallet);
