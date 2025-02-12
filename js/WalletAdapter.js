@@ -4,14 +4,14 @@ import {
     selectWallet_
 } from "./WalletController.js";
 
-window.addWallet = function(walletAddress) {
-    addWallet_(walletAddress);
+window.addWallet = async function (walletAddress) {
+    await addWallet_(walletAddress);
 }
 
-window.selectWallet = function(walletItem) {
-    selectWallet_(walletItem);
+window.selectWallet = async function (walletItem) {
+    await selectWallet_(walletItem);
 }
 
-window.deleteWallet = function(deleteButton) {
-    deleteWallet_(deleteButton);
+window.deleteWallet = async function (deleteButton) {
+    await deleteWallet_(deleteButton);
 }

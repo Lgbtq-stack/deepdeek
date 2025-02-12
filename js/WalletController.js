@@ -52,17 +52,17 @@ export async function fetchWalletDataFromAPI() {
 }
 
 export function addWalletsFromConfig(walletData) {
-    const walletListContainer = document.querySelector('.wallet-list');
-    walletListContainer.innerHTML = '';
+    const walletListContainer = document.querySelector(".wallet-list");
+    walletListContainer.innerHTML = "";
 
-    walletData.forEach(wallet => {
-        const walletItemContainer = document.createElement('div');
-        walletItemContainer.className = 'wallet-item-container';
+    walletData.forEach((wallet) => {
+        const walletItemContainer = document.createElement("div");
+        walletItemContainer.className = "wallet-item-container";
 
-        const activeClass = wallet.is_active ? 'active-wallet' : '';
+        const activeClass = wallet.is_active ? "active-wallet" : "";
 
         walletItemContainer.innerHTML = `
-            <div class="wallet-item ${activeClass}" data-wallet-id="${wallet.id}" onclick="selectWallet(this)">
+            <div class="wallet-item ${activeClass}" onclick="selectWallet(this)">
                 <span class="active-indicator"></span>
                 <div class="wallet-info">
                     <span class="wallet-address">${wallet.address}</span>
@@ -78,6 +78,7 @@ export function addWalletsFromConfig(walletData) {
         walletListContainer.appendChild(walletItemContainer);
     });
 }
+
 
 export async function walletValidator(wallet) {
     if (isProcessing) {
@@ -145,7 +146,7 @@ export async function walletValidator(wallet) {
 }
 
 export async function addWallet_() {
-    const walletAddress = document.getElementById('wallet-input').value.trim();
+    const walletAddress = document.getElementById("wallet-input").value.trim();
 
     const validation = await walletValidator(walletAddress);
 
@@ -162,86 +163,90 @@ export async function addWallet_() {
             throw new Error(`Server error: ${response.status}`);
         }
 
-        const result = await response.json();
+        console.log("Wallet successfully added on server:", walletAddress);
 
-        if (!result || !result.id) {
-            throw new Error("Invalid server response: Missing wallet ID.");
+        await fetchWalletDataFromAPI();
+
+        const newWallet = userData.wallets.find(w => w.address === walletAddress);
+
+        if (!newWallet) {
+            throw new Error("Newly added wallet not found in userData.");
         }
 
-        console.log("Wallet successfully added on server:", result);
+        addWalletsFromConfig(userData.wallets);
 
-        const walletId = result.id;
-
-        const walletItemContainer = document.createElement('div');
-        walletItemContainer.className = 'wallet-item-container';
-
-        walletItemContainer.innerHTML = `
-            <div class="wallet-item" data-wallet-id="${walletId}" onclick="selectWallet_(this)">
-                <span class="active-indicator"></span>
-                <div class="wallet-info">
-                    <span class="wallet-address">${walletAddress}</span>
-                </div>
-            </div>
-            <button class="delete-wallet-btn" onclick="deleteWallet_(this)">
-                <svg class="delete-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ff4d4d">
-                    <path d="M0 0h24v24H0V0z" fill="none"/>
-                    <path d="M16 9v10H8V9h8m-1.5-6h-5L9 4H4v2h16V4h-5.5zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/>
-                </svg>
-            </button>
-        `;
-
-        document.querySelector('.wallet-list').appendChild(walletItemContainer);
-
-        document.getElementById('wallet-popup').style.display = 'none';
-        document.getElementById('wallet-input').value = '';
-
-        checkAndSetActiveWallet();
+        document.getElementById("wallet-popup").style.display = "none";
+        document.getElementById("wallet-input").value = "";
 
         console.log("Added wallet address sent:", walletAddress);
-        onWalletAdded();
 
+        await selectWallet_(newWallet.address);
+
+        onWalletAdded();
     } catch (error) {
         console.error("Error adding wallet to server:", error);
         showErrorPopup_("error", "Failed to add wallet. Please try again.");
     }
 }
 
-let activeWalletLocal = "";
-export function selectWallet_(walletItem) {
-    document.querySelectorAll('.wallet-item').forEach(item => {
-        item.classList.remove('active-wallet');
-    });
+export async function selectWallet_(walletAddress) {
+    if (!walletAddress) {
+        console.error("No wallet address provided.");
+        return;
+    }
 
-    walletItem.classList.add('active-wallet');
-
-    const selectedWalletAddress = walletItem.querySelector('.wallet-address').innerText.trim();
-
-    const wallet = userData.wallets.find(w => w.address === selectedWalletAddress);
-    const walletId = wallet ? wallet.id : null;
-
-    if (!walletId) {
-        console.error("Wallet ID not found for address:", selectedWalletAddress);
+    const wallet = userData.wallets.find((w) => w.address === walletAddress);
+    if (!wallet) {
+        console.error("Wallet ID not found for address:", walletAddress);
         showErrorPopup_("error", "Failed to select wallet. Try again.");
         return;
     }
 
-    activeWalletLocal = selectedWalletAddress;
+    document.querySelectorAll(".wallet-item").forEach((item) => {
+        item.classList.remove("active-wallet");
+    });
 
-    console.log("Selected wallet id and address sent:", walletId, selectedWalletAddress);
+    const walletItem = [...document.querySelectorAll(".wallet-item")].find(item =>
+        item.querySelector(".wallet-address").innerText.trim() === walletAddress
+    );
+
+    if (!walletItem) {
+        console.error("Wallet item not found in UI for address:", walletAddress);
+        return;
+    }
+
+    walletItem.classList.add("active-wallet");
+
+    console.log("Selected wallet id and address sent:", wallet.id, walletAddress);
+
+    try {
+        const url = `https://www.miniappservbb.com/api/wallet/select?uid=${user_Id}&address_id=${wallet.id}`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Wallet successfully selected on server:", result);
+    } catch (error) {
+        console.error("Error selecting wallet on server:", error);
+        showErrorPopup_("error", "Failed to select wallet. Please try again.");
+    }
 }
 
 export async function deleteWallet_(deleteButton) {
-    const walletContainer = deleteButton.closest('.wallet-item-container');
-    const walletAddress = walletContainer.querySelector('.wallet-address').innerText.trim();
+    const walletContainer = deleteButton.closest(".wallet-item-container");
+    const walletAddress = walletContainer.querySelector(".wallet-address").innerText.trim();
 
-    const wallet = userData.wallets.find(w => w.address === walletAddress);
-    const walletId = wallet ? wallet.id : null;
-
-    if (!walletId) {
+    const walletIndex = userData.wallets.findIndex((w) => w.address === walletAddress);
+    if (walletIndex === -1) {
         console.error("Wallet ID not found for address:", walletAddress);
         showErrorPopup_("error", "Failed to remove wallet. Try again.");
         return;
     }
+
+    const walletId = userData.wallets[walletIndex].id;
 
     try {
         const url = `https://www.miniappservbb.com/api/wallet/remove?uid=${user_Id}&address_id=${walletId}`;
@@ -254,22 +259,42 @@ export async function deleteWallet_(deleteButton) {
         const result = await response.json();
         console.log("Wallet successfully removed from server:", result);
 
-        walletContainer.remove();
+        walletContainer.style.opacity = "0";
+        setTimeout(() => {
+            walletContainer.remove();
+        }, 300);
 
+        userData.wallets.splice(walletIndex, 1);
         console.log("Deleted wallet id and address sent:", walletId, walletAddress);
 
+        if (activeWallet === walletId) {
+            if (userData.wallets.length > 0) {
+                const firstWallet = document.querySelector(".wallet-item");
+                if (firstWallet) {
+                    await selectWallet(firstWallet);
+                }
+            } else {
+                activeWallet = "";
+                document.querySelector(".wallet-list").innerHTML = `
+                    <div class="no-wallets-message">
+                        <p>You don't have any wallets.</p>
+                    </div>
+                `;
+            }
+        }
     } catch (error) {
         console.error("Error removing wallet from server:", error);
         showErrorPopup_("error", "Failed to remove wallet. Please try again.");
     }
 }
 
-
 export function checkAndSetActiveWallet() {
-    const walletItems = document.querySelectorAll('.wallet-item');
+    const walletItems = document.querySelectorAll(".wallet-item");
 
     if (walletItems.length === 1) {
         const singleWallet = walletItems[0];
-        selectWallet_(singleWallet);
+        if (singleWallet) {
+            selectWallet(singleWallet);
+        }
     }
 }

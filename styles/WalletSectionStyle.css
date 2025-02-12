@@ -3,7 +3,7 @@
 }
 
 .wallet-section {
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .wallet-item-container {
@@ -37,11 +37,10 @@
 .wallet-item {
     display: flex;
     align-items: center;
-    flex-grow: 1;
     background-color: var(--grey-background-color);
     padding: 15px;
     border-radius: 10px;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .wallet-item.active-wallet {

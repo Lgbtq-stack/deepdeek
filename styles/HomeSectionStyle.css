@@ -40,12 +40,16 @@ body {
     min-height: 100vh;
     width: 100%;
     overflow-y: hidden;
+    flex-shrink: 0; /* Предотвращает растяжение футера */
+
 }
 
 /* Home */
 .container {
     width: 100%;
-    height: 100%;
+
+    height: 100vh; /* Фиксируем высоту всей страницы */
+    overflow: hidden; /* Убираем нежелательный рост */
     border-radius: 20px;
     padding: 20px;
     text-align: center;
@@ -207,9 +211,9 @@ body {
 }
 
 .time-block {
-    width: 85px;
-    height: 85px;
-    border-radius: 10px;
+    width: 105px;
+    height: 105px;
+    border-radius: 50px;
     margin: 0 5px;
     display: flex;
     flex-direction: column;
