@@ -33,13 +33,14 @@
                 Get in now and watch your profits soar! 🚀
             </p>
             <div class="balance">
-                <h2 class="balance-value">$0.00</h2>
-                <p class="balance-tokens">Tokens: 0</p>
+                <h2 id="balance-value" class="balance-value">$0.00</h2>
+                <p id="balance-tokens" class="balance-tokens">Tokens: 0</p>
             </div>
 
             <div class="buttons">
                 <div class="btn-wrapper">
-                    <button class="btn buy" onclick="openRechargePopup()">
+                    <button class="btn buy" onclick="openTestPage1()">
+<!--                    <button class="btn buy" onclick="openRechargePopup()">-->
                         <div class="btn-background buy">
                             <svg class="btn-icon" version="1.0" xmlns="http://www.w3.org/2000/svg"
                                  width="40" height="40" viewBox="0 0 128.000000 128.000000"
@@ -56,7 +57,8 @@
                 </div>
 
                 <div class="btn-wrapper">
-                    <button class="btn link" onclick="openWebPage()">
+                    <button class="btn link" onclick="openTestPage2()">
+<!--                    <button class="btn link" onclick="openWebPage()">-->
                         <div class="btn-background link">
                             <svg class="btn-icon" version="1.0" xmlns="http://www.w3.org/2000/svg"
                                  width="40" height="40" viewBox="0 0 128.000000 128.000000"
@@ -91,7 +93,7 @@
                 </div>
             </div>
 
-            <button class="btn reward" onclick="openWithdrawPopup()">Claim reward</button>
+<!--            <button class="btn reward" onclick="openWithdrawPopup()">Claim reward</button>-->
         </main>
     </div>
 
@@ -203,6 +205,8 @@
 
 <div id="toast-notification" class="toast"></div>
 
+
+<script type="module" src="js/CheckUserAndWallet.js"></script>
 <script type="module" src="js/main.js"></script>
 <script type="module" src="js/WalletAdapter.js"></script>
 <script type="module" src="Modular/Popups/PopupAdapter.js"></script>

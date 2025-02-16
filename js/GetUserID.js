@@ -1,28 +1,16 @@
+import {getWalletBalance} from "./CheckTrustline.js";
+import {checkUserAndWallets} from "./CheckUserAndWallet.js";
+import {walletValidator} from "./WalletController.js";
+
 export let user_Id = "";
 let localUserID = "488916773";
-export const localUserData = {
-    "user_data": [
-        {
-            "tokens": 0,
-            "balance": 0
-        }
-    ]
-}
+
 export let activeWallet = "";
 
-export const localWalletData = {
-    "wallet_data": [
-        {
-            "wallet": "GAKVPYAOBX7JWG7E74YXHSKNIYXSIKJ5J3PHCDTMAIKKMYLVB5WIY4KO",
-            "balance": -10,
-            "active": true,
-        },
-        {
-            "wallet": "GBQCR3L7H2QBCJNEI3CLBRCGQFSTGPEPRW3U2NPQRUJ66ZVQ7SECSUHQ",
-            "balance": -10,
-            "active": false,
-        },
-    ]
+export let userData = {}
+
+export function SetUserData(data) {
+    userData = data;
 }
 
 export const localHistoryData = {
@@ -32,11 +20,27 @@ export const localHistoryData = {
 let isInitialized = false;
 export let debug = true;
 
-export function Initialize()
-{
+export async function Initialize() {
     isInitialized = true;
 
     user_Id = getUserIdFromURL();
+    console.log("User ID:", user_Id);
+
+    await checkUserAndWallets();
+
+    if (!activeWallet) {
+        const walletItems = userData.wallets;
+        if (walletItems.length > 0) {
+            activeWallet = walletItems.find(wallet => wallet.is_active)?.address || walletItems[0].address;
+            console.log("Set active wallet to:", activeWallet);
+        } else {
+            console.warn("No wallets available.");
+            return;
+        }
+    }
+
+    const balance = await getWalletBalance(activeWallet);
+    console.log("Wallet balance:", balance);
 }
 
 function getUserIdFromURL() {

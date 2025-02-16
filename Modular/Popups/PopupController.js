@@ -49,6 +49,24 @@ export function openWebPage_() {
     }
 }
 
+export function openTestPage1_() {
+    const url = "https://google.com/";
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        console.error("URL is empty or invalid.");
+    }
+}
+
+export function openTestPage2_() {
+    const url = "https://bing.com/";
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        console.error("URL is empty or invalid.");
+    }
+}
+
 export function showToast_(message) {
     const toast = document.getElementById('toast-notification');
     toast.textContent = message;
