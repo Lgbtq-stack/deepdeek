@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stellar-sdk@10.5.1/lib/stellar-sdk.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!--Styles -->
     <link rel="stylesheet" href="styles/HomeSectionStyle.css">
     <link rel="stylesheet" href="styles/WalletSectionStyle.css">
     <link rel="stylesheet" href="styles/HistoryStyle.css">
+    <link rel="stylesheet" href="styles/ReferralsSectionStyle.css">
     <link rel="stylesheet" href="Modular/Popups/ErrorPopUpStyle.css">
     <link rel="stylesheet" href="Modular/Popups/CommonPopup.css">
+    <link rel="stylesheet" href="Modular/Popups/RefPopup.css">
     <link rel="stylesheet" href="Modular/Popups/RechargePopupStyle.css">
 
     <title>DeepSeek ETF Early Access</title>
@@ -93,7 +96,7 @@
                 </div>
             </div>
 
-<!--            <button class="btn reward" onclick="openWithdrawPopup()">Claim reward</button>-->
+            <button class="btn reward" onclick="openWithdrawPopup()">Claim reward</button>
         </main>
     </div>
 
@@ -103,6 +106,27 @@
 
         <div class="divider-line"> </div>
         <div class="wallet-list"> </div>
+    </div>
+
+    <!-- Referrals Section -->
+    <div id="referrals-content" class="referrals-section hidden">
+
+        <div class="referral-chart-container">
+            <canvas id="referralChart"></canvas>
+        </div>
+        <p class="referral-summary">Total amount of bonuses received:</p>
+        <p id="referral-total" class="referral-total">$0.00</p>
+
+        <p id="my-referral" class="my-referral">My Referrals:</p>
+
+        <div id="referral-list" class="referral-list">
+            <!-- Referrals -->
+        </div>
+    </div>
+
+    <div class="referral-buttons">
+        <button onclick="openPopup('ref-invite-popup')">Referral Link</button>
+        <button onclick="openPopup('ref-submit-popup')">Submit referral</button>
     </div>
 
     <!-- Transaction Section -->
@@ -115,11 +139,14 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="nav-item home active" onclick="setActiveTab(this)">
-            <img src="content/home.png" alt="Home" class="nav-icon">
+        <div class="nav-item referrals" onclick="setActiveTab(this)">
+            <img src="content/referrals.png" alt="Referrals" class="nav-icon">
         </div>
         <div class="nav-item wallet" onclick="setActiveTab(this)">
             <img src="content/wallet.png" alt="Wallet" class="nav-icon">
+        </div>
+        <div class="nav-item home active" onclick="setActiveTab(this)">
+            <img src="content/home.png" alt="Home" class="nav-icon">
         </div>
         <div class="nav-item transaction" onclick="setActiveTab(this)">
             <img src="content/transaction.png" alt="Transaction" class="nav-icon">
@@ -201,12 +228,39 @@
             <button id="epus-close-error-popup-button" class="epus-close-error-popup-button">Close</button>
         </div>
     </div>
+
+    <!-- Referrals Popup -->
+    <div id="ref-invite-popup" class="popup-overlay" onclick="closePopup()">
+        <div class="popup-box" onclick="event.stopPropagation()">
+            <h2 class="popup-title">Copy your Referral ID and share it:</h2>
+            <div class="referral-id-container">
+                <p id="referral-id">ABC123XYZ</p>
+            </div>
+            <button class="popup-btn copy-btn" onclick="copyToClipboard('referral-id')">COPY</button>
+        </div>
+    </div>
+
+
+    <div id="ref-submit-popup" class="popup-overlay" onclick="closePopup()">
+        <div class="popup-box" onclick="event.stopPropagation()">
+            <h2 class="popup-title">Enter referral ID</h2>
+
+            <div class="referral-input-container">
+                <input id="referral-input" class="popup-referral-input" type="text" placeholder="Enter referral ID...">
+            </div>
+
+            <button class="popup-btn submit-btn" onclick="submitReferralId()">Submit</button>
+        </div>
+    </div>
 </div>
 
 <div id="toast-notification" class="toast"></div>
 
+<button id="scrollToTop" class="scroll-to-top">⬆</button>
 
 <script type="module" src="js/CheckUserAndWallet.js"></script>
+<script type="module" src="js/Referrals.js"></script>
+<script type="module" src="js/ReferralChart.js"></script>
 <script type="module" src="js/main.js"></script>
 <script type="module" src="js/WalletAdapter.js"></script>
 <script type="module" src="Modular/Popups/PopupAdapter.js"></script>

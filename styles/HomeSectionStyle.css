@@ -23,6 +23,10 @@
     --opacity-background: rgba(0, 0, 0, 0.5);
 }
 
+.hidden {
+    display: none !important;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -40,16 +44,15 @@ body {
     min-height: 100vh;
     width: 100%;
     overflow-y: hidden;
-    flex-shrink: 0; /* Предотвращает растяжение футера */
-
+    flex-shrink: 0;
 }
 
 /* Home */
 .container {
     width: 100%;
 
-    height: 100vh; /* Фиксируем высоту всей страницы */
-    overflow: hidden; /* Убираем нежелательный рост */
+    height: 100vh;
+    overflow: hidden;
     border-radius: 20px;
     padding: 20px;
     text-align: center;
@@ -211,9 +214,9 @@ body {
 }
 
 .time-block {
-    width: 105px;
-    height: 105px;
-    border-radius: 50px;
+    width: 125px;
+    height: 125px;
+    border-radius: 100px;
     margin: 0 5px;
     display: flex;
     flex-direction: column;
@@ -221,6 +224,7 @@ body {
     align-items: center;
     background-color: var(--timer-background-color);
     border: 1px solid var(--border-color);
+    transition: all 0.3s ease; /* Плавный переход */
 }
 
 .time-block span {
@@ -235,11 +239,46 @@ body {
     color: var(--text-color);
 }
 
+@media (max-width: 600px) {
+    .time-block {
+        width: 87px;
+        height: 87px;
+        border-radius: 50px;
+        margin: 0 3px;
+    }
+
+    .time-block span {
+        font-size: 24px;
+    }
+
+    .time-block p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .time-block {
+        width: 70px;
+        height: 70px;
+        border-radius: 40px;
+        margin: 0 2px;
+    }
+
+    .time-block span {
+        font-size: 22px;
+    }
+
+    .time-block p {
+        font-size: 12px;
+    }
+}
+
+
 .reward {
     margin-top: 20px;
     padding: 15px;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 30px;
     border: none;
     cursor: pointer;
     font-size: 18px;
@@ -251,10 +290,15 @@ body {
 .footer {
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
     margin-bottom: 40px;
     padding-top: 10px;
     border-top: 1px solid var(--border-color);
+    z-index: 5;
+    position: relative;
+    background-color: var(--container-bg);
+    position: relative;
+    width: 100%;
+    margin-top: auto;
 }
 
 .nav-item {
@@ -276,3 +320,5 @@ body {
     filter: brightness(0) invert(.5);
     color: var(--text-color);
 }
+
+

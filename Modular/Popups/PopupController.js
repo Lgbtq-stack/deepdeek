@@ -5,6 +5,8 @@ export const addWalletPopup_ = document.getElementById("wallet-popup");
 export const withdrawPopup_ = document.getElementById("withdraw-popup");
 export const rechargePopup_ = document.getElementById("recharge-popup");
 export const linkAddressUrl_ = document.getElementById("link-address-popup");
+export const invitePopup_ = document.getElementById("ref-invite-popup");
+export const submitRef_ = document.getElementById("ref-submit-popup");
 
 export function showErrorPopup_(type, message) {
     if (type === "error") {
@@ -67,6 +69,20 @@ export function openTestPage2_() {
     }
 }
 
+export function openPopup_(popup_id) {
+    if (popup_id.includes("ref-invite-popup")) {
+        invitePopup_.style.display = "flex";
+
+        disableScroll_();
+    } else if (popup_id.includes("ref-submit-popup")) {
+
+        document.getElementById("referral-input").value = ""; // Очистка input
+        submitRef_.style.display = "flex";
+
+        disableScroll_();
+    }
+}
+
 export function showToast_(message) {
     const toast = document.getElementById('toast-notification');
     toast.textContent = message;
@@ -109,6 +125,8 @@ export function closePopup_() {
     addWalletPopup_.style.display = 'none';
     withdrawPopup_.style.display = 'none';
     rechargePopup_.style.display = 'none';
+    invitePopup_.style.display = 'none';
+    submitRef_.style.display = 'none';
 
     enableScroll();
 }

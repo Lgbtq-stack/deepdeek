@@ -1,0 +1,173 @@
+.referrals-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 50px 20px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    overflow-y: auto; /* Делаем прокрутку всей секции */
+    max-height: calc(100vh - 70px); /* 100vh минус высота футера */
+    scrollbar-width: none;
+
+}
+
+.referral-summary {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+.referral-total {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--confirm-color);
+    margin: 0;
+}
+
+.referral-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#referral-list {
+    /*overflow-y: auto; скролл отдельно листа */
+    /*max-height: 65vh;*/
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-top: 0;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow-y: visible;
+    max-height: unset;
+}
+
+#referral-list::-webkit-scrollbar {
+    display: none;
+}
+
+.referral-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    min-width: 300px;
+    background-color: var(--border-color);
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 24px;
+    color: var(--white);
+    font-weight: bold;
+    text-align: left;
+    box-shadow: 0 2px 5px var(--box-shadow);
+    margin: 5px auto;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.referral-item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: var(--grey-background-color);
+    padding: 12px 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px var(--box-shadow);
+}
+
+.referral-name {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.referral-amount {
+    font-weight: bold;
+    color: var(--confirm-color);
+}
+
+.referral-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.referral-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+.referral-buttons {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    transition: bottom 0.3s ease-in-out;
+    z-index: 1;
+    text-wrap: nowrap;
+}
+
+.referral-buttons button {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    padding: 12px 30px;
+    border: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.referrals-active .referral-buttons {
+    bottom: 95px;
+    z-index: 3;
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 150px;
+    right: 20px;
+    background-color: var(--primary);
+    color: var(--text-color);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+}
+
+/* Когда кнопка видима */
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Когда скрывается */
+.scroll-to-top.hide {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+}

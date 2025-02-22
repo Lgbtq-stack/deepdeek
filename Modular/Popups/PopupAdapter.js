@@ -4,6 +4,7 @@ import {
     copyToClipboard_,
     disableScroll_,
     enableScroll_,
+    openPopup_,
     openRechargePopup_,
     openTestPage1_,
     openTestPage2_,
@@ -36,6 +37,10 @@ window.openTestPage1 = function() {
 
 window.openTestPage2 = function() {
     openTestPage2_();
+}
+
+window.openPopup = function(popup_id) {
+    openPopup_(popup_id);
 }
 
 window.showErrorPopup = function(type, message) {
