@@ -63,7 +63,7 @@
     align-items: center;
     width: 90%;
     max-width: 600px;
-    min-width: 300px;
+    min-width: 200px;
     background-color: var(--border-color);
     padding: 10px;
     border-radius: 12px;
@@ -152,6 +152,12 @@
         padding: 10px 20px;
         font-size: 14px;
     }
+
+    .referral-item {
+        max-width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 400px) {
@@ -166,6 +172,11 @@
         min-width: 90px;
         padding: 8px 15px;
         font-size: 13px;
+    }
+
+    .referral-item {
+        font-size: 13px;
+        padding: 8px;
     }
 }
 

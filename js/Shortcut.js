@@ -25,13 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         arrow.style.transform = isOpen ? "rotate(0deg)" : "rotate(180deg)";
     });
-
-    function updateReferralProgress(currentRefs, requiredRefs) {
-        document.getElementById("current-refs").textContent = currentRefs;
-        document.getElementById("next-bonus-refs").textContent = requiredRefs;
-    }
-
-    updateReferralProgress(1, 3);
 });
 
 export function updateReferralPanel(data) {

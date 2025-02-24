@@ -18,7 +18,8 @@
     padding: 5px 20px 30px 20px;
     border-radius: 10px;
     text-align: center;
-    width: 400px;
+    width: 200px; /* Базовая ширина */
+    max-width: 90%; /* 📱 Делаем адаптивным */
     animation: popup-fade-in 0.2s ease;
 }
 
@@ -56,5 +57,26 @@
     to {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+@media (max-width: 400px) {
+    .epus-error-popup-content {
+        width: 90%;
+        max-width: 260px;
+        padding: 10px 18px 25px;
+    }
+
+    .epus-error-title {
+        font-size: 22px;
+    }
+
+    .epus-error-message {
+        font-size: 16px;
+    }
+
+    .epus-close-error-popup-button {
+        font-size: 14px;
+        padding: 8px 16px;
     }
 }

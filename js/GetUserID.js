@@ -2,6 +2,7 @@ import {getWalletBalance} from "./CheckTrustline.js";
 import {checkUserAndWallets} from "./CheckUserAndWallet.js";
 import {walletValidator} from "./WalletController.js";
 import {updateUserUI} from "./Referrals.js";
+import {updateReferralPanel} from "./Shortcut.js";
 
 export let user_Id = "";
 let localUserID = "488916773";
