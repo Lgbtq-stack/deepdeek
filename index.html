@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="styles/HomeSectionStyle.css">
     <link rel="stylesheet" href="styles/WalletSectionStyle.css">
     <link rel="stylesheet" href="styles/HistoryStyle.css">
+    <link rel="stylesheet" href="styles/ShortcutStyle.css">
     <link rel="stylesheet" href="styles/ReferralsSectionStyle.css">
     <link rel="stylesheet" href="Modular/Popups/ErrorPopUpStyle.css">
     <link rel="stylesheet" href="Modular/Popups/CommonPopup.css">
@@ -113,6 +114,7 @@
 
         <div class="referral-chart-container">
             <canvas id="referralChart"></canvas>
+            <p class="chart-info-text">Info: Chart shows last 7 days activity</p>
         </div>
         <p class="referral-summary">Total amount of bonuses received:</p>
         <p id="referral-total" class="referral-total">$0.00</p>
@@ -234,32 +236,43 @@
         <div class="popup-box" onclick="event.stopPropagation()">
             <h2 class="popup-title">Copy your Referral ID and share it:</h2>
             <div class="referral-id-container">
-                <p id="referral-id">ABC123XYZ</p>
+                <p id="referral-id">Loading...</p>
             </div>
             <button class="popup-btn copy-btn" onclick="copyToClipboard('referral-id')">COPY</button>
         </div>
     </div>
 
-
+    <!-- Submit Referral Popup -->
     <div id="ref-submit-popup" class="popup-overlay" onclick="closePopup()">
         <div class="popup-box" onclick="event.stopPropagation()">
             <h2 class="popup-title">Enter referral ID</h2>
-
             <div class="referral-input-container">
                 <input id="referral-input" class="popup-referral-input" type="text" placeholder="Enter referral ID...">
             </div>
-
-            <button class="popup-btn submit-btn" onclick="submitReferralId()">Submit</button>
+            <button id="submit-referral-btn" class="popup-btn submit-btn" onclick="submitReferralId()">Submit</button>
         </div>
     </div>
+
 </div>
 
 <div id="toast-notification" class="toast"></div>
 
 <button id="scrollToTop" class="scroll-to-top">⬆</button>
 
+<div class="side-panel">
+    <button id="toggle-panel" class="panel-button">
+        <span class="arrow">⬅</span>
+        <span class="toggle-icon">ℹ️</span>
+    </button>
+    <div id="info-panel" class="panel-content">
+        <p class="panel-text">📢 Important Information Here!</p>
+    </div>
+</div>
+
+
 <script type="module" src="js/CheckUserAndWallet.js"></script>
 <script type="module" src="js/Referrals.js"></script>
+<script type="module" src="js/Shortcut.js"></script>
 <script type="module" src="js/ReferralChart.js"></script>
 <script type="module" src="js/main.js"></script>
 <script type="module" src="js/WalletAdapter.js"></script>

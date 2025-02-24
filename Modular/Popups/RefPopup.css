@@ -36,6 +36,13 @@
     margin: 0 auto 20px auto;
 }
 
+.chart-info-text {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-color);
+    margin: 8px 0;
+}
+
 .test-update-btn {
     display: block;
     margin: 10px auto;

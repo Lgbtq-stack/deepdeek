@@ -1,7 +1,7 @@
 import {GetUserID, Initialize} from "./GetUserID.js";
 import {renderHistory} from "./HistorySection.js";
 import {loadWalletData} from "./WalletController.js";
-import {loadReferrals} from "./Referrals.js";
+import {loadReferrals, updateUserUI} from "./Referrals.js";
 
 export let tg = null;
 
@@ -47,6 +47,7 @@ function initializeData() {
         return false;
     }
 }
+
 
 let currentTab = '';
 
@@ -94,6 +95,7 @@ window.setActiveTab = async function (selectedTab) {
         document.getElementById('referrals-content').classList.remove('hidden');
         document.body.classList.add('referrals-active');
         await loadReferrals();
+        await initReferralChart();
     } else if (currentTab === 'history') {
         await renderHistory();
     }

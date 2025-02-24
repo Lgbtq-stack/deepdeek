@@ -1,6 +1,7 @@
 import {getWalletBalance} from "./CheckTrustline.js";
 import {checkUserAndWallets} from "./CheckUserAndWallet.js";
 import {walletValidator} from "./WalletController.js";
+import {updateUserUI} from "./Referrals.js";
 
 export let user_Id = "";
 let localUserID = "488916773";
@@ -27,6 +28,7 @@ export async function Initialize() {
     console.log("User ID:", user_Id);
 
     await checkUserAndWallets();
+    updateUserUI(userData);
 
     if (!activeWallet) {
         const walletItems = userData.wallets;

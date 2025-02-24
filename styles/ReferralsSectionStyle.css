@@ -131,6 +131,12 @@
     font-size: 16px;
 }
 
+.popup-btn.disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .referrals-active .referral-buttons {
     bottom: 95px;
     z-index: 3;
@@ -140,8 +146,8 @@
     position: fixed;
     bottom: 150px;
     right: 20px;
-    background-color: var(--primary);
-    color: var(--text-color);
+    background-color: var(--white);
+    color: var(--black);
     border: none;
     border-radius: 50%;
     width: 40px;

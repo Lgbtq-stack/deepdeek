@@ -1,60 +1,68 @@
-import { loadReferrals, localReferralsData } from "./Referrals.js";
+import { loadReferrals } from "./Referrals.js";
 
-// 🗓 Генерация подписей X (даты из данных)
-function generateDateLabels(referralHistoryData) {
-    return referralHistoryData.map(entry =>
-        new Date(entry.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })
-    );
+function formatChartData(chartInfo) {
+    const labels = Object.keys(chartInfo).sort().map(date => formatDate(date));
+    const data = labels.map((_, index) => Object.values(chartInfo)[index] ?? 0);
+
+    return { labels, data };
 }
 
-// 📊 Определение шага по оси Y
+// 📅 Форматирует дату в MM/DD/YY
+function formatDate(dateStr) {
+    let date = new Date(dateStr);
+    let month = String(date.getMonth() + 1).padStart(2, "0");
+    let day = String(date.getDate()).padStart(2, "0");
+    let year = String(date.getFullYear()).slice(-2);
+    return `${month}/${day}/${year}`;
+}
+
+// 📊 Логика для вычисления шагов по Y оси
 function getYAxisStep(totalBalance) {
-    if (totalBalance <= 500) return 100;
-    if (totalBalance <= 1000) return 150;
-    if (totalBalance <= 5000) return 250;
-    if (totalBalance <= 10000) return 500;
-    return 1000;
+    if (totalBalance <= 100) return 10;
+    if (totalBalance <= 1000) return 100;
+    if (totalBalance <= 10000) return 1000;
+    return 5000;
 }
 
-// 📈 Определение максимального значения Y
 function getYAxisMax(totalBalance) {
     let step = getYAxisStep(totalBalance);
     return Math.ceil(totalBalance / step) * step;
 }
 
-// 🔄 Функция обновления графика
-export function updateReferralChart(referralHistoryData) {
-    const ctx = document.getElementById("referralChart")?.getContext("2d");
+// 🔄 Обновление графика
+export function updateReferralChart(chartInfo) {
+    const ctx = document.getElementById('referralChart')?.getContext('2d');
 
     if (!ctx) {
         console.error("❌ referralChart не найден в DOM!");
         return;
     }
 
-    // Удаляем старый график перед созданием нового
+    // 🛑 Удаляем старый график перед созданием нового
     if (window.referralChart instanceof Chart) {
         window.referralChart.destroy();
     }
 
-    let labels = generateDateLabels(referralHistoryData);
-    let totalBonusesHistory = referralHistoryData.map(entry => entry.totalBonuses);
-    let latestTotalBonus = totalBonusesHistory[totalBonusesHistory.length - 1] || 0;
+    const { labels, data } = formatChartData(chartInfo);
+
+    console.log("📊 Labels:", labels);
+    console.log("📈 Data:", data);
 
     window.referralChart = new Chart(ctx, {
-        type: "line",
+        type: 'line',
         data: {
             labels: labels,
-            datasets: [
-                {
-                    label: "Total Bonuses Growth",
-                    data: totalBonusesHistory,
-                    borderColor: "green",
-                    borderWidth: 2,
-                    pointBackgroundColor: "green",
-                    pointRadius: 5,
-                    fill: false
-                }
-            ]
+            datasets: [{
+                label: 'Total Bonuses Growth',
+                data: data,
+                borderColor: 'green',
+                borderWidth: 2,
+                pointBackgroundColor: 'green',
+                pointRadius: 5, // 🔥 Показываем точки всегда
+                showLine: true,
+                spanGaps: false, // 🔥 Линия не прерывается, даже если 0
+                fill: false
+            }]
         },
         options: {
             responsive: true,
@@ -62,9 +70,10 @@ export function updateReferralChart(referralHistoryData) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: getYAxisMax(latestTotalBonus),
+                    min: 0,
+                    max: getYAxisMax(Math.max(...data)),
                     ticks: {
-                        stepSize: getYAxisStep(latestTotalBonus)
+                        stepSize: getYAxisStep(Math.max(...data))
                     }
                 }
             }
@@ -77,19 +86,14 @@ export function updateReferralChart(referralHistoryData) {
 // 🚀 Инициализация графика
 export async function initReferralChart() {
     console.log("📊 Запуск initReferralChart...");
-    await loadReferrals(); // Загружаем данные
+    let referralData = await loadReferrals();
 
-    let referralHistoryData = localReferralsData.history || [];
-
-    if (referralHistoryData.length < 7) {
-        let lastEntry = referralHistoryData[referralHistoryData.length - 1] || { totalBonuses: 0 };
-        while (referralHistoryData.length < 7) {
-            referralHistoryData.unshift({ ...lastEntry });
-        }
+    if (!referralData || !referralData.chart_info) {
+        console.error("❌ Нет данных для графика!");
+        return;
     }
 
-    updateReferralChart(referralHistoryData);
+    updateReferralChart(referralData.chart_info);
 }
 
-// 🛠 Добавляем глобальную функцию (если вызывается из HTML)
 window.initReferralChart = initReferralChart;

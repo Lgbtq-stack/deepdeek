@@ -1,69 +1,26 @@
 import {user_Id} from "./GetUserID.js";
 import {closePopup_, showErrorPopup_, showToast_} from "../Modular/Popups/PopupController.js";
-import {updateReferralChart} from "./ReferralChart.js";
-
-export const localReferralsData = {
-    totalBonuses: 61.7,
-    referrals: [
-        { name: "Alice", bonus: 12.5 },
-        { name: "Bob", bonus: 8.0 },
-        { name: "Charlie", bonus: 15.3 },
-        { name: "David", bonus: 5.2 },
-        { name: "Eve", bonus: 20.7 },
-        { name: "Alice", bonus: 12.5 },
-        { name: "Bob", bonus: 8.0 },
-        { name: "Charlie", bonus: 15.3 },
-        { name: "David", bonus: 5.2 },
-        { name: "Eve", bonus: 20.7 },
-        { name: "Alice", bonus: 12.5 },
-        { name: "Bob", bonus: 8.0 },
-        { name: "Charlie", bonus: 15.3 },
-        { name: "David", bonus: 5.2 },
-        { name: "Eve", bonus: 20.7 },
-        { name: "Alice", bonus: 12.5 },
-        { name: "Bob", bonus: 8.0 },
-        { name: "Charlie", bonus: 15.3 },
-        { name: "David", bonus: 5.2 },
-        { name: "Eve", bonus: 20.7 },
-    ]
-};
-
-const referralHistoryData = [
-    { date: "2024-02-16", totalBonuses: 50 },
-    { date: "2024-02-17", totalBonuses: 75 },
-    { date: "2024-02-18", totalBonuses: 90 },
-    { date: "2024-02-19", totalBonuses: 110 },
-    { date: "2024-02-20", totalBonuses: 150 },
-    { date: "2024-02-21", totalBonuses: 200 },
-    { date: "2024-02-22", totalBonuses: 246 } // Сегодняшний день
-];
 
 export async function loadReferrals() {
     let referralData;
-    let debug = true;
-    // try {
-        if (debug) {
-            console.log("Debug mode is ON: Using local referral data.");
-            referralData = localReferralsData;
-        } else {
-            const response = await fetch(`https://miniappservbb.com/api/referrals?uid=${user_Id}`);
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch referral data.");
-            }
+    try {
+        const response = await fetch(`https://miniappservbb.com/api/referrer?uid=${user_Id}`);
 
-            referralData = await response.json();
-            console.log("Referrals loaded from API:", referralData);
+        if (!response.ok) {
+            throw new Error("❌ Ошибка загрузки данных с сервера.");
         }
 
-        updateReferralsUI(referralData);
+        referralData = await response.json();
+        console.log("✅ Данные с сервера:", referralData);
+    } catch (error) {
+        console.error("❌ Ошибка загрузки рефералов:", error);
+        showErrorPopup_("error", "Failed to load referrals. Please try again.");
+        return;
+    }
 
-        updateReferralChart(referralHistoryData);
-    // } catch (error) {
-    //     console.error("Error loading referrals:", error);
-    //     showErrorPopup_("error", "Failed to load referrals. Please try again.");
-    //     updateReferralsUI({ totalBonuses: 0, referrals: [] });
-    // }
+    updateReferralsUI(referralData);
+    return referralData;
 }
 
 function updateReferralsUI(data) {
@@ -71,27 +28,23 @@ function updateReferralsUI(data) {
     const referralList = document.getElementById("referral-list");
 
     if (!totalBonusesElement || !referralList) {
-        console.error("Referral elements not found in DOM.");
+        console.error("❌ Referral elements not found in DOM.");
         return;
     }
 
     referralList.innerHTML = "";
-
     referralList.scrollTop = 0;
 
-    if (!data || !Array.isArray(data.referrals) || data.referrals.length === 0) {
+    if (!data || !data.referral_transactions || Object.keys(data.referral_transactions).length === 0) {
         totalBonusesElement.innerText = "$0.00";
-        referralList.innerHTML = `
-            <div class="referral-item">
-                <div class="referral-item-content">You don't have any referrals</div>
-            </div>`;
+        referralList.innerHTML = `<div class="referral-item"><div class="referral-item-content">No referrals yet.</div></div>`;
         return;
     }
 
-    const totalBonuses = data.referrals.reduce((sum, r) => sum + (r.bonus || 0), 0);
+    const totalBonuses = Object.values(data.referral_transactions).reduce((sum, bonus) => sum + bonus, 0);
     totalBonusesElement.innerText = `$${totalBonuses.toFixed(2)}`;
 
-    data.referrals.forEach(referral => {
+    Object.entries(data.referral_transactions).forEach(([id, bonus]) => {
         const referralItem = document.createElement("div");
         referralItem.classList.add("referral-item");
 
@@ -100,11 +53,11 @@ function updateReferralsUI(data) {
 
         const referralName = document.createElement("span");
         referralName.classList.add("referral-name");
-        referralName.innerText = referral.name;
+        referralName.innerText = `User #${id}`;
 
         const referralAmount = document.createElement("span");
         referralAmount.classList.add("referral-amount");
-        referralAmount.innerText = `+$${(referral.bonus || 0).toFixed(2)}`;
+        referralAmount.innerText = `~$${bonus.toFixed(2)}`;
 
         referralContent.appendChild(referralName);
         referralContent.appendChild(referralAmount);
@@ -141,6 +94,8 @@ function updateReferralsUI(data) {
 //     }
 // }
 
+window.submitReferralId = submitReferralId;
+
 export async function submitReferralId() {
     const referralId = document.getElementById("referral-input").value.trim();
 
@@ -150,7 +105,7 @@ export async function submitReferralId() {
     }
 
     try {
-        const url = `https://www.miniappservbb.com/api/referral/submit?uid=${user_id}&referral_id=${referralId}`;
+        const url = `https://www.miniappservbb.com/api/referrer/submit?uid=${user_Id}&referrer_id=${referralId}`;
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -188,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function scrollToTop() {
         if (referralSection) {
-            referralSection.scrollTo({ top: 0, behavior: "smooth" });
+            referralSection.scrollTo({top: 0, behavior: "smooth"});
         }
     }
 
@@ -202,3 +157,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+export function updateUserUI(data) {
+    const submitReferralButton = document.getElementById("submit-referral-btn");
+    const referralIdText = document.getElementById("referral-id");
+
+    if (!data) {
+        console.error("❌ Данные пользователя не найдены.");
+        return;
+    }
+
+    if (data.referrer === null) {
+        submitReferralButton.disabled = false;
+        submitReferralButton.classList.remove("disabled");
+    } else {
+        submitReferralButton.disabled = true;
+        submitReferralButton.classList.add("disabled");
+    }
+
+    // ✅ Вставляем user_id в pop-up для копирования
+    if (referralIdText) {
+        referralIdText.innerText = data.user_id;
+    }
+}
