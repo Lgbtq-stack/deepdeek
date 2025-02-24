@@ -1,65 +1,79 @@
 .side-panel {
     position: fixed;
-    top: 60%;
-    right: 0;
+    top: 50%;
+    right: -160px;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    z-index: 1000;
+    transition: right 0.4s ease-in-out;
+    z-index: 999;
 }
 
 .panel-button {
-    background-color: var(--primary, blue);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 10px 0 0 10px;
-    cursor: pointer;
-    font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    width: 65px;
+    height: 50px;
+    background: #1E3A8A;
+    color: var(--white);
+    border: none;
+    border-radius: 20px 0 0 20px;
+    cursor: pointer;
+    position: absolute;
+    left: -50px;
     transition: transform 0.3s ease-in-out;
 }
 
-.arrow {
-    font-size: 16px;
+.panel-button .arrow {
+    margin-right: 5px;
+    transition: transform 0.3s ease-in-out;
 }
 
 .toggle-icon {
-    font-size: 18px;
+    width: 22px;
+    height: 22px;
+    margin-left: 5px;
 }
 
-.panel-content {
-    position: fixed;
-    top: 50%;
-    right: -250px;
-    width: 220px;
-    background: var(--white, black);
-    padding: 15px;
-    border-radius: 20px;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
-    transform: translateY(-50%);
-    transition: right 0.3s ease-in-out;
-    color: var(--body);
-    opacity: 0;
-    visibility: hidden;
+.info-panel {
+    background: #222;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    width: 160px;
+    text-align: center;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
-.panel-content.visible {
-    opacity: 1;
-    visibility: visible;
+.side-panel.open {
+    right: 0;
 }
 
-.panel-content.active {
-    right: 60px;
-}
-
-@keyframes bounce-horizontal {
+@keyframes bounce {
     0%, 100% { transform: translateX(5px); }
-    50% { transform: translateX(-2px); }
+    50% { transform: translateX(0px); }
 }
 
-.panel-button.bouncing {
-    animation: bounce-horizontal 1.5s infinite ease-in-out;
+.side-panel.closed .panel-button {
+    animation: bounce 1s infinite;
+}
+
+.ref-level {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.ref-count {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.ref-bonus {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFD700; /* Золотой цвет бонуса */
+    margin-bottom: 5px;
 }

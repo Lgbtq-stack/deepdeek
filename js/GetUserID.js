@@ -29,6 +29,7 @@ export async function Initialize() {
 
     await checkUserAndWallets();
     updateUserUI(userData);
+    updateReferralPanel(userData);
 
     if (!activeWallet) {
         const walletItems = userData.wallets;

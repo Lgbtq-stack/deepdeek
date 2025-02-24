@@ -252,7 +252,6 @@
             <button id="submit-referral-btn" class="popup-btn submit-btn" onclick="submitReferralId()">Submit</button>
         </div>
     </div>
-
 </div>
 
 <div id="toast-notification" class="toast"></div>
@@ -262,10 +261,12 @@
 <div class="side-panel">
     <button id="toggle-panel" class="panel-button">
         <span class="arrow">⬅</span>
-        <span class="toggle-icon">ℹ️</span>
+        <img src="content/gift-box.png" class="toggle-icon" alt="Gift Icon">
     </button>
-    <div id="info-panel" class="panel-content">
-        <p class="panel-text">📢 Important Information Here!</p>
+    <div id="infoPanel" class="info-panel">
+        <p class="ref-level">Level: <span id="ref-level">1</span></p>
+        <p class="ref-count">Referrals: <span id="ref-count">3</span>/<span id="ref-next-total">5</span></p>
+        <p class="ref-bonus">Bonus: <span id="bonus-percent">2</span>% ➡ <span id="bonus-next-percent">3</span>%</p>
     </div>
 </div>
 

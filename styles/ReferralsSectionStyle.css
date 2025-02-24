@@ -117,9 +117,16 @@
     transition: bottom 0.3s ease-in-out;
     z-index: 1;
     text-wrap: nowrap;
+
+    width: 100%;
+    max-width: 500px;
+    justify-content: center;
 }
 
 .referral-buttons button {
+    flex: 1;
+    min-width: 120px;
+    max-width: 220px;
     background-color: #4CAF50;
     color: white;
     font-weight: bold;
@@ -129,7 +136,39 @@
     border-top-right-radius: 10px;
     cursor: pointer;
     font-size: 16px;
+    text-align: center;
 }
+
+@media (max-width: 600px) {
+    .referral-buttons {
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .referral-buttons button {
+        max-width: 140px;
+        min-width: 100px;
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .referral-buttons {
+        width: 90%;
+        max-width: 300px;
+        justify-content: center;
+    }
+
+    .referral-buttons button {
+        max-width: 120px;
+        min-width: 90px;
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+}
+
 
 .popup-btn.disabled {
     background-color: gray;
